@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>My To-Do List</h1>
+
+   
+    <form class="add-form" action="/add" method="POST">
+      <input type="text" name="task" placeholder="Enter a new task..." required>
+      <button type="submit">Add</button>
+    </form>
+
+
+    <ul class="task-list">
+      <% if (tasks.length === 0) { %>
+        <li class="empty">No tasks yet. Add something! 🙂</li>
+      <% } %>
+
+      <% tasks.forEach(task => { %>
+        <li class="task-item">
+          <form action="/toggle/<%= task.id %>" method="POST" class="inline-form">
+            <button class="check-btn" type="submit">
+              <% if (task.done) { %>
+                ✓
+              <% } else { %>
+                ○
+              <% } %>
+            </button>
+          </form>
+
+          <span class="task-text <%= task.done ? 'done' : '' %>">
+            <%= task.text %>
+          </span>
+
+          <form action="/delete/<%= task.id %>" method="POST" class="inline-form">
+            <button class="delete-btn" type="submit">✕</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+</body>
+</html>
